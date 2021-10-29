@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tibbi_asi_takibi/model/vaccine.dart';
 import 'package:tibbi_asi_takibi/page/all_vaccines.dart';
 import 'package:tibbi_asi_takibi/page/complated_vaccines.dart';
 import 'package:tibbi_asi_takibi/page/todo_vaccines.dart';
@@ -11,16 +10,6 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int selectedIndex = 0;
-  static List<Vaccine> allVaccines = [
-    Vaccine(vaccineName: "mango ve cilek aromali asi", isVaccinate: false),
-    Vaccine(vaccineName: "hulkman cocuk asisi", isVaccinate: false),
-    Vaccine(vaccineName: "ise yaramayan asi", isVaccinate: false),
-    Vaccine(vaccineName: "tok karnina yapilacak asi", isVaccinate: false),
-    Vaccine(
-        vaccineName: "ne sen sor ne ben soyleyim asisi", isVaccinate: false),
-    Vaccine(vaccineName: "vergisi fazla olan asi", isVaccinate: false),
-    Vaccine(vaccineName: "bence bu kadar yeter asisi", isVaccinate: false),
-  ];
   bool valuee = false;
   List<Widget> screens = [
     ToDoVaccinesView(),
