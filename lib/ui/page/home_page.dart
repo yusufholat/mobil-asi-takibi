@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tibbi_asi_takibi/page/all_vaccines.dart';
-import 'package:tibbi_asi_takibi/page/complated_vaccines.dart';
-import 'package:tibbi_asi_takibi/page/todo_vaccines.dart';
+import 'package:tibbi_asi_takibi/ui/page/all_vaccines.dart';
+import 'package:tibbi_asi_takibi/ui/page/login_view.dart';
+import 'package:tibbi_asi_takibi/ui/page/todo_vaccines.dart';
+
+import 'complated_vaccines.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,7 +14,7 @@ class HomePageState extends State<HomePage> {
   int selectedIndex = 0;
   bool valuee = false;
   List<Widget> screens = [
-    ToDoVaccinesView(),
+    LoginView(),
     ComplatedVaccinesView(),
     AllVaccinesView(),
   ];
@@ -22,7 +24,7 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       body: screens[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).accentColor,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         unselectedItemColor: Colors.white60,
         selectedItemColor: Colors.white,
         type: BottomNavigationBarType.fixed,
@@ -33,17 +35,14 @@ class HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.checklist),
             label: 'Yapilacak Asilar',
-            backgroundColor: Theme.of(context).accentColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.done),
             label: 'Yapilan Asilar',
-            backgroundColor: Theme.of(context).accentColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.fact_check_rounded),
             label: 'Tum Asilar',
-            backgroundColor: Theme.of(context).accentColor,
           ),
         ],
       ),

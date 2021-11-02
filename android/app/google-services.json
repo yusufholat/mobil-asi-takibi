@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "731884015605",
+    "firebase_url": "https://asi-takip-uygulamasi-default-rtdb.firebaseio.com",
+    "project_id": "asi-takip-uygulamasi",
+    "storage_bucket": "asi-takip-uygulamasi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731884015605:android:4952ca979c03eb8d631abc",
+        "android_client_info": {
+          "package_name": "com.example.tibbi_asi_takibi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731884015605-n9hqpqcom7rq3du9b760k0565r7uinrb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2pgsPnvPFGyPfqV_yt6sbIKLYfaU9tG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731884015605-n9hqpqcom7rq3du9b760k0565r7uinrb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

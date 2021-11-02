@@ -5,7 +5,7 @@ import 'package:tibbi_asi_takibi/model/vaccine.dart';
 
 class FirebaseServise {
   static const String FIREBASE_URL =
-      "https://mobil-asi-taki-default-rtdb.firebaseio.com";
+      "https://asi-takip-uygulamasi-default-rtdb.firebaseio.com/";
 
   Future<List<Vaccine>> getVaccines() async {
     var url = Uri.parse("$FIREBASE_URL/vaccines.json");

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tibbi_asi_takibi/page/home_page.dart';
 
 class ToDoVaccinesView extends StatefulWidget {
   ToDoVaccinesView({Key? key}) : super(key: key);
