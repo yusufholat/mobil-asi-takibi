@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tibbi_asi_takibi/core/server/google_signin.dart';
+import 'package:tibbi_asi_takibi/ui/page/home_page.dart';
 
 class LoginView extends StatefulWidget {
   LoginView({Key? key}) : super(key: key);
@@ -27,7 +28,13 @@ class _LoginViState extends State<LoginView> {
           label: Text("Google Login"),
           icon: Icon(Icons.login),
           onPressed: () async {
-            await googleSigninHelper.signIn();
+            bool loggedIn = await googleSigninHelper.signIn();
+            if (loggedIn) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePageView()),
+                  (route) => false);
+            }
           },
         ),
       ),

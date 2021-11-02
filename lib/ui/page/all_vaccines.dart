@@ -52,6 +52,7 @@ class _AllVaccinesViewState extends State<AllVaccinesView> {
           () => {},
         ),
         title: Text(list[index].name.toString()),
+        subtitle: Text(list[index].dayCount.toString() + "gun kaldi"),
       ),
       physics: BouncingScrollPhysics(),
       itemCount: list.length,

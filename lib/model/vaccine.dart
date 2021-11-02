@@ -1,10 +1,11 @@
 class Vaccine {
   late String name;
-
+  late int dayCount;
   Vaccine({name});
 
   Vaccine.fromJson(Map<String, dynamic> json) {
     name = json['name'];
+    dayCount = json['dayCount'];
   }
 
   Map<String, dynamic> toJson() {

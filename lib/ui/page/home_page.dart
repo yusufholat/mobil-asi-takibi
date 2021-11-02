@@ -5,16 +5,16 @@ import 'package:tibbi_asi_takibi/ui/page/todo_vaccines.dart';
 
 import 'complated_vaccines.dart';
 
-class HomePage extends StatefulWidget {
+class HomePageView extends StatefulWidget {
   @override
-  HomePageState createState() => HomePageState();
+  HomePageViewState createState() => HomePageViewState();
 }
 
-class HomePageState extends State<HomePage> {
+class HomePageViewState extends State<HomePageView> {
   int selectedIndex = 0;
   bool valuee = false;
   List<Widget> screens = [
-    LoginView(),
+    ToDoVaccinesView(),
     ComplatedVaccinesView(),
     AllVaccinesView(),
   ];
