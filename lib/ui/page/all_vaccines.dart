@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tibbi_asi_takibi/core/firebase_service.dart';
+import 'package:tibbi_asi_takibi/core/server/firebase_service.dart';
 import 'package:tibbi_asi_takibi/model/vaccine.dart';
-
-import 'home_page.dart';
 
 class AllVaccinesView extends StatefulWidget {
   AllVaccinesView({Key? key}) : super(key: key);
@@ -54,6 +52,7 @@ class _AllVaccinesViewState extends State<AllVaccinesView> {
           () => {},
         ),
         title: Text(list[index].name.toString()),
+        subtitle: Text(list[index].dayCount.toString() + "gun kaldi"),
       ),
       physics: BouncingScrollPhysics(),
       itemCount: list.length,

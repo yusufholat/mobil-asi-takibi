@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'home_page.dart';
-
 class ComplatedVaccinesView extends StatefulWidget {
   ComplatedVaccinesView({Key? key}) : super(key: key);
 
