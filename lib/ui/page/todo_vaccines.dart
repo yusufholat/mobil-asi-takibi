@@ -65,7 +65,7 @@ class _ToDoVaccinesViewState extends State<ToDoVaccinesView> {
               Text("Dogum Tarihi Giriniz :  "),
               Expanded(child: Container()),
               OutlinedButton(
-                  onPressed: () => pickDate(context), child: getText()),
+                  onPressed: () => pickDate(context), child: getDateText()),
             ],
           ),
           Divider(),
@@ -74,23 +74,14 @@ class _ToDoVaccinesViewState extends State<ToDoVaccinesView> {
                 ? Text(
                     "Cocugunuzun yapilacak asilarini gormek icin dogum tarihini giriniz!")
                 : ListView.builder(
-                    itemBuilder: (context, index) => ListTile(
-                      contentPadding: EdgeInsets.all(5),
-                      onTap: () {
-                        // showDialog(
-                        //     context: context,
-                        //     builder: (context) {
-                        //       return Center(
-                        //         child: Text(list[index].name),
-                        //       );
-                        //     });
+                    itemBuilder: (context, index) => FutureBuilder(
+                      future: getVaccine(_user, index),
+                      builder: (context, snapshott) {
+                        if (snapshott.hasData)
+                          return buildListTile(snapshott.data as Vaccine);
+                        else
+                          return Text("data not found");
                       },
-                      title: Text("dd"),
-                      //subtitle: getRangeDate(list[index].dayCount),
-                      trailing: IconButton(
-                          color: Theme.of(context).colorScheme.secondary,
-                          onPressed: () {},
-                          icon: Icon(Icons.check)),
                     ),
                     physics: BouncingScrollPhysics(),
                     itemCount: _user.vaccines.length,
@@ -101,12 +92,8 @@ class _ToDoVaccinesViewState extends State<ToDoVaccinesView> {
     );
   }
 
-  void getVaccineName(DbUser _user, int index, String firstText) {
-    late String text = service
-        .getVaccineWithDocID(_user.vaccines[index].vaccineID)
-        .then((value) => value.name)
-        .toString();
-    firstText = text;
+  Future<Vaccine> getVaccine(DbUser _user, int index) async {
+    return await service.getVaccineWithDocID(_user.vaccines[index].vaccineID);
   }
 
   Future pickDate(BuildContext context) async {
@@ -125,12 +112,24 @@ class _ToDoVaccinesViewState extends State<ToDoVaccinesView> {
       });
   }
 
-  Text getText() {
+  Text getDateText() {
     if (HomePageViewState.date == null)
       return Text("Dogum Tarihi Seciniz");
     else
       return Text(
           '${HomePageViewState.date!.day}/${HomePageViewState.date!.month}/${HomePageViewState.date!.year}');
+  }
+
+  Widget buildListTile(Vaccine data) {
+    return ListTile(
+      contentPadding: EdgeInsets.all(5),
+      title: Text(data.name),
+      subtitle: getRangeDate(data.dayCount),
+      trailing: IconButton(
+          color: Theme.of(context).colorScheme.secondary,
+          onPressed: () {},
+          icon: Icon(Icons.check)),
+    );
   }
 
   Text getRangeDate(int dayCount) {
