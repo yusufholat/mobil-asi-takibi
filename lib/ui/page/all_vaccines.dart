@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tibbi_asi_takibi/core/server/firebase_service.dart';
 import 'package:tibbi_asi_takibi/model/vaccine.dart';
@@ -11,8 +12,10 @@ class AllVaccinesView extends StatefulWidget {
 
 class _AllVaccinesViewState extends State<AllVaccinesView> {
   late FirebaseServise service;
+  late final User? user;
   @override
   void initState() {
+    user = FirebaseAuth.instance.currentUser;
     service = FirebaseServise();
     super.initState();
   }
@@ -24,7 +27,7 @@ class _AllVaccinesViewState extends State<AllVaccinesView> {
         title: Text("Tum Asilar"),
       ),
       body: FutureBuilder(
-        future: service.getVaccines(),
+        future: service.getAllVaccines(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:

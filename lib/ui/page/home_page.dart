@@ -12,7 +12,7 @@ class HomePageView extends StatefulWidget {
 
 class HomePageViewState extends State<HomePageView> {
   int selectedIndex = 0;
-  bool valuee = false;
+  static DateTime? date;
   List<Widget> screens = [
     ToDoVaccinesView(),
     ComplatedVaccinesView(),

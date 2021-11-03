@@ -26,7 +26,7 @@ class GoogleSigninHelper {
 
     if (userCredential.user != null) {
       print(userCredential.user!.email.toString() + " signed in!");
-      FirebaseServise.saveDefaultUserData(userCredential);
+      await FirebaseServise.saveDefaultUserData(userCredential);
       return true;
     } else
       return false;
