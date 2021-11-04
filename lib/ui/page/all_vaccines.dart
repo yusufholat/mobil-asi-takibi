@@ -55,7 +55,7 @@ class _AllVaccinesViewState extends State<AllVaccinesView> {
             context: context,
             builder: (BuildContext context) => AlertDialog(
               title: Text(list[index].name),
-              content: Text(list[index].dayCount.toString()),
+              content: Text(list[index].desc),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'OK'),
