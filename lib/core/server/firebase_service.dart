@@ -1,32 +1,18 @@
 import 'dart:convert';
-import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
+import 'package:tibbi_asi_takibi/model/user.dart';
+
 import 'package:tibbi_asi_takibi/model/vaccine.dart';
 
 class FirebaseServise {
-  static const String FIREBASE_URL =
-      "https://asi-takip-uygulamasi-default-rtdb.firebaseio.com/";
-
-  Future<List<Vaccine>?> getVaccines() async {
-    var url = Uri.parse("$FIREBASE_URL/vaccines.json");
-    final response = await http.get(url);
-
-    // if (response.statusCode == HttpStatus.ok) {
-    //   final jsonModel = json.decode(response.body);
-    //   final userList = jsonModel
-    //       .map((e) => Vaccine.fromJson(e as Map<String, dynamic>))
-    //       .toList()
-    //       .cast<Vaccine>();
-    //   print(userList);
-    //   return userList;
-    // } else
-    //   return Future.error(response.statusCode);
+  Future<List<Vaccine>?> getAllVaccines() async {
     final CollectionReference vaccinesRef =
         FirebaseFirestore.instance.collection("Vaccines");
 
-    QuerySnapshot querySnapshot = await vaccinesRef.get();
+    QuerySnapshot querySnapshot =
+        await vaccinesRef.orderBy("dayCount", descending: false).get();
     if (querySnapshot.docs.isNotEmpty) {
       final vaccineList = querySnapshot.docs
           .map((doc) => Vaccine.fromJson(doc.data() as Map<String, dynamic>))
@@ -35,6 +21,49 @@ class FirebaseServise {
       return vaccineList;
     }
     return null;
+  }
+
+  Future<DbUser> getUserModelwithID(String userId) async {
+    var data =
+        (await FirebaseFirestore.instance.collection('Users').doc(userId).get())
+            .data();
+
+    String jsonData = json.encode(data);
+    var jsonn = json.decode(jsonData);
+    print(jsonn);
+    DbUser userr = DbUser.fromJson(jsonn);
+    return userr;
+  }
+
+  Future changeVaccineStatus(DbUser user, int index) async {
+    String uidd = FirebaseAuth.instance.currentUser!.uid;
+    List<Map>? defaultVaccines = [];
+    DocumentReference ref =
+        FirebaseFirestore.instance.collection('Users').doc(user.uid);
+
+    DbUser us = await getUserModelwithID(uidd);
+    var list = us.vaccines.toList();
+    for (var i = 0; i < list.length; i++) {
+      bool? value = us.vaccines[i].isVaccineted;
+      if (i == index) value = !us.vaccines[i].isVaccineted!;
+      defaultVaccines.add({
+        "isVaccineted": value,
+        "vaccineName": us.vaccines[i].vaccineName,
+        "dayCount": us.vaccines[i].dayCount
+      });
+    }
+
+    ref.update({"vaccines": defaultVaccines});
+  }
+
+  Future<List<Vaccines>> getUserComplatedVaccines() async {
+    String uidd = FirebaseAuth.instance.currentUser!.uid;
+    DbUser user = await getUserModelwithID(uidd);
+    List<Vaccines> vaccines = [];
+    user.vaccines.forEach((element) {
+      if (element.isVaccineted == true) vaccines.add(element);
+    });
+    return vaccines;
   }
 
   static Future<void> saveDefaultUserData(UserCredential userCredential) async {
@@ -50,12 +79,20 @@ class FirebaseServise {
     final CollectionReference vaccinesRef =
         FirebaseFirestore.instance.collection("Vaccines");
 
-    QuerySnapshot querySnapshot = await vaccinesRef.get();
-    final allData = querySnapshot.docs.map((doc) => doc.id).toList();
-    print(allData);
+    QuerySnapshot vaccineQuerySnapshot =
+        await vaccinesRef.orderBy("dayCount", descending: false).get();
+    final vaccinesData = vaccineQuerySnapshot.docs
+        .map((doc) => doc.data())
+        .cast<Map<String, dynamic>>()
+        .toList();
+    print(vaccinesData);
     List<Map>? defaultVaccines = [];
-    for (var i = 0; i < allData.length; i++) {
-      defaultVaccines.add({"vaccineID": allData[i], "isVaccineted": false});
+    for (var i = 0; i < vaccinesData.length; i++) {
+      defaultVaccines.add({
+        "isVaccineted": false,
+        "vaccineName": vaccinesData[i]["name"],
+        "dayCount": vaccinesData[i]["dayCount"]
+      });
     }
     await usersRef.doc(userCredential.user!.uid).set({
       'uid': userCredential.user!.uid,
