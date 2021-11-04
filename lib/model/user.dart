@@ -30,21 +30,25 @@ class DbUser {
 
 class Vaccines {
   Vaccines({
-    required this.vaccineID,
     required this.isVaccineted,
+    required this.dayCount,
+    required this.vaccineName,
   });
-  late final String vaccineID;
-  late final bool isVaccineted;
+  bool? isVaccineted;
+  late final int dayCount;
+  late final String vaccineName;
 
   Vaccines.fromJson(Map<String, dynamic> json) {
-    vaccineID = json['vaccineID'];
     isVaccineted = json['isVaccineted'];
+    dayCount = json['dayCount'];
+    vaccineName = json['vaccineName'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['vaccineID'] = vaccineID;
     _data['isVaccineted'] = isVaccineted;
+    _data['dayCount'] = dayCount;
+    _data['name'] = vaccineName;
     return _data;
   }
 }

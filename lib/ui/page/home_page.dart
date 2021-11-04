@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tibbi_asi_takibi/core/local/simple_local_save.dart';
 import 'package:tibbi_asi_takibi/ui/page/all_vaccines.dart';
-import 'package:tibbi_asi_takibi/ui/page/login_view.dart';
 import 'package:tibbi_asi_takibi/ui/page/todo_vaccines.dart';
 
 import 'complated_vaccines.dart';
@@ -18,6 +18,11 @@ class HomePageViewState extends State<HomePageView> {
     ComplatedVaccinesView(),
     AllVaccinesView(),
   ];
+  @override
+  void initState() {
+    date = SimpleLocalSave.getDate() ?? null;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +47,7 @@ class HomePageViewState extends State<HomePageView> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.fact_check_rounded),
-            label: 'Tum Asilar',
+            label: 'Asi Bilgileri',
           ),
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tibbi_asi_takibi/core/server/firebase_service.dart';
 import 'package:tibbi_asi_takibi/model/vaccine.dart';
 
@@ -24,7 +25,7 @@ class _AllVaccinesViewState extends State<AllVaccinesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tum Asilar"),
+        title: Text("Asi Bilgileri"),
       ),
       body: FutureBuilder(
         future: service.getAllVaccines(),
@@ -48,36 +49,28 @@ class _AllVaccinesViewState extends State<AllVaccinesView> {
   Widget _listVaccines(List<Vaccine> list) {
     return ListView.builder(
       padding: EdgeInsets.all(10),
-      itemBuilder: (context, index) => CheckboxListTile(
-        controlAffinity: ListTileControlAffinity.leading,
-        value: true,
-        onChanged: (valuee) => setState(
-          () => {},
-        ),
+      itemBuilder: (context, index) => ListTile(
+        onTap: () {
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: Text(list[index].name),
+              content: Text(list[index].dayCount.toString()),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: Text('TAMAM'),
+                ),
+              ],
+            ),
+          );
+        },
         title: Text(list[index].name.toString()),
-        subtitle: Text(list[index].dayCount.toString() + "gun kaldi"),
+        subtitle: Text("asi bilgileri icin tiklayiniz."),
+        trailing: Icon(FontAwesomeIcons.questionCircle),
       ),
       physics: BouncingScrollPhysics(),
       itemCount: list.length,
     );
   }
-
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //       appBar: AppBar(
-  //         title: Text('Tum Asilar'),
-  //       ),
-  //       body: ListView.builder(
-  //         padding: EdgeInsets.all(10),
-  //         itemBuilder: (context, index) => CheckboxListTile(
-  //           controlAffinity: ListTileControlAffinity.leading,
-  //           value: HomePageState.allVaccines[index].isVaccinate,
-  //           onChanged: (valuee) => setState(
-  //               () => HomePageState.allVaccines[index].isVaccinate = valuee!),
-  //           title: Text(HomePageState.allVaccines[index].vaccineName),
-  //         ),
-  //         physics: BouncingScrollPhysics(),
-  //         itemCount: HomePageState.allVaccines.length,
-  //       ));
-  // }
 }
