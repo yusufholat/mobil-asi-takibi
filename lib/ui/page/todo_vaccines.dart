@@ -126,11 +126,12 @@ class _ToDoVaccinesViewState extends State<ToDoVaccinesView> {
     );
     if (newDate == null)
       return;
-    else
-      setState(() {
-        SimpleLocalSave.setDate(newDate);
-        HomePageViewState.date = newDate;
-      });
+    else {
+      await service.resetAllIsVaccineted();
+      SimpleLocalSave.setDate(newDate);
+      HomePageViewState.date = newDate;
+    }
+    setState(() {});
   }
 
   Text getDateText() {

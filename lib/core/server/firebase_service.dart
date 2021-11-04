@@ -56,6 +56,25 @@ class FirebaseServise {
     ref.update({"vaccines": defaultVaccines});
   }
 
+  Future resetAllIsVaccineted() async {
+    String uidd = FirebaseAuth.instance.currentUser!.uid;
+    List<Map>? defaultVaccines = [];
+    DocumentReference ref =
+        FirebaseFirestore.instance.collection('Users').doc(uidd);
+
+    DbUser us = await getUserModelwithID(uidd);
+    var list = us.vaccines.toList();
+    for (var i = 0; i < list.length; i++) {
+      defaultVaccines.add({
+        "isVaccineted": false,
+        "vaccineName": us.vaccines[i].vaccineName,
+        "dayCount": us.vaccines[i].dayCount
+      });
+    }
+
+    ref.update({"vaccines": defaultVaccines});
+  }
+
   Future<List<Vaccines>> getUserComplatedVaccines() async {
     String uidd = FirebaseAuth.instance.currentUser!.uid;
     DbUser user = await getUserModelwithID(uidd);
