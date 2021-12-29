@@ -3,9 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tibbi_asi_takibi/core/local/simple_local_save.dart';
 import 'package:tibbi_asi_takibi/core/server/firebase_service.dart';
+import 'package:tibbi_asi_takibi/core/server/google_signin.dart';
 import 'package:tibbi_asi_takibi/model/user.dart';
 import 'package:intl/intl.dart';
 import 'package:tibbi_asi_takibi/ui/page/home_page.dart';
+import 'package:tibbi_asi_takibi/ui/page/login_view.dart';
 
 class ToDoVaccinesView extends StatefulWidget {
   ToDoVaccinesView({Key? key}) : super(key: key);
@@ -30,7 +32,22 @@ class _ToDoVaccinesViewState extends State<ToDoVaccinesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Yapilacak Asilar'),
+        title: Text('Yapılacak Aşılar'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              bool loggedOut = await GoogleSigninHelper.signOut();
+
+              if (loggedOut) {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginView()),
+                    (route) => false);
+              }
+            },
+          )
+        ],
       ),
       body: FutureBuilder(
         future: service.getUserModelwithID(user!.uid),
@@ -57,13 +74,13 @@ class _ToDoVaccinesViewState extends State<ToDoVaccinesView> {
       child: Column(
         children: [
           Text(
-            "Hosgeldiniz " + _user.displayName.toString(),
+            "Hoşgeldiniz " + _user.displayName.toString(),
             style: TextStyle(fontSize: 24),
           ),
           Divider(),
           Row(
             children: [
-              Text("Dogum Tarihi Giriniz :  "),
+              Text("Doğum Tarihi Giriniz :  "),
               Expanded(child: Container()),
               OutlinedButton(
                   onPressed: () => pickDate(context), child: getDateText()),
@@ -73,7 +90,7 @@ class _ToDoVaccinesViewState extends State<ToDoVaccinesView> {
           Expanded(
             child: HomePageViewState.date == null
                 ? Text(
-                    "Cocugunuzun yapilacak asilarini gormek icin dogum tarihini giriniz!")
+                    "Çocuğunuzun yapılacak aşılarını görmek için doğum tarihini giriniz!")
                 : ListView.builder(
                     itemBuilder: (context, index) =>
                         buildListTile(_user, index),
@@ -102,7 +119,7 @@ class _ToDoVaccinesViewState extends State<ToDoVaccinesView> {
           setState(() {});
         } else {
           final snackBar = SnackBar(
-            content: Text('Asinin gunu daha gelmedi!'),
+            content: Text('Aşının günü daha gelmedi!'),
             duration: Duration(seconds: 2),
             action: SnackBarAction(
               onPressed: () {},
@@ -136,7 +153,7 @@ class _ToDoVaccinesViewState extends State<ToDoVaccinesView> {
 
   Text getDateText() {
     if (HomePageViewState.date == null)
-      return Text("Dogum Tarihi Seciniz");
+      return Text("Doğum Tarihi Seçiniz");
     else
       return Text(
           '${HomePageViewState.date!.day}/${HomePageViewState.date!.month}/${HomePageViewState.date!.year}');
@@ -147,14 +164,15 @@ class _ToDoVaccinesViewState extends State<ToDoVaccinesView> {
     if (newDate.isBefore(DateTime.now())) {
       Duration range = DateTime.now().difference(newDate);
       return Text(range.inDays.toString() +
-          "gun onceydi.. (" +
+          "gün önceydi. (" +
           DateFormat("dd/MM/yyyy").format(newDate).toString() +
           ")");
     } else {
       Duration range = newDate.difference(DateTime.now());
       return Text(range.inDays.toString() +
-          " gun kaldi" +
-          DateFormat("dd/MM/yyyy").format(newDate).toString());
+          " gün kaldı.. (" +
+          DateFormat("dd/MM/yyyy").format(newDate).toString() +
+          ")");
     }
   }
 }

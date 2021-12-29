@@ -21,11 +21,11 @@ class _LoginViState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Giris Yapman Lazim"),
+        title: Text("Lütfen Giriş Yapınız"),
       ),
       body: Center(
         child: FloatingActionButton.extended(
-          label: Text("Google Login"),
+          label: Text("Giriş Yap"),
           icon: Icon(Icons.login),
           onPressed: () async {
             bool loggedIn = await googleSigninHelper.signIn();

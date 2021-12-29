@@ -26,7 +26,7 @@ class _ComplatedVaccinesViewState extends State<ComplatedVaccinesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Yapilan Asilar'),
+        title: Text('Yapılan Aşılar'),
       ),
       body: FutureBuilder(
         future: service.getUserComplatedVaccines(),

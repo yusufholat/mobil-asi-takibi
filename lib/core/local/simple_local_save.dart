@@ -15,4 +15,8 @@ class SimpleLocalSave {
     if (birthday == null) return null;
     return DateTime.tryParse(birthday);
   }
+
+  static Future<void> resetDate() async {
+    await preferences.remove("date");
+  }
 }

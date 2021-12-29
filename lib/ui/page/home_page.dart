@@ -39,15 +39,15 @@ class HomePageViewState extends State<HomePageView> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.checklist),
-            label: 'Yapilacak Asilar',
+            label: 'Yaplacak Aşılar',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.done),
-            label: 'Yapilan Asilar',
+            label: 'Yapılan Aşılar',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.fact_check_rounded),
-            label: 'Asi Bilgileri',
+            label: 'Aşı Bilgileri',
           ),
         ],
       ),

@@ -3,7 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tibbi_asi_takibi/core/server/firebase_service.dart';
 
 class GoogleSigninHelper {
-  final _googleSignIn = GoogleSignIn();
+  static final _googleSignIn = GoogleSignIn();
 
   GoogleSignInAccount? _user;
 
@@ -30,5 +30,16 @@ class GoogleSigninHelper {
       return true;
     } else
       return false;
+  }
+
+  static Future<bool> signOut() async {
+    try {
+      _googleSignIn.signOut();
+      print("cikis ypaildi");
+      return true;
+    } catch (e) {
+      print("cikis yapilamadi..");
+      return false;
+    }
   }
 }

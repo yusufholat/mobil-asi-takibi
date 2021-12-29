@@ -25,7 +25,7 @@ class _AllVaccinesViewState extends State<AllVaccinesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Asi Bilgileri"),
+        title: Text("Aşı Bilgileri"),
       ),
       body: FutureBuilder(
         future: service.getAllVaccines(),
@@ -66,7 +66,7 @@ class _AllVaccinesViewState extends State<AllVaccinesView> {
           );
         },
         title: Text(list[index].name.toString()),
-        subtitle: Text("asi bilgileri icin tiklayiniz."),
+        subtitle: Text("aşı bilgileri için tıklayınız."),
         trailing: Icon(FontAwesomeIcons.questionCircle),
       ),
       physics: BouncingScrollPhysics(),
